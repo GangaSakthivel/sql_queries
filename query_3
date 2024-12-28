@@ -1,0 +1,26 @@
+Scenario & Query Question
+Imagine you have the following table for orders placed by customers:
+
+Orders Table:
+OrderID	CustomerID	OrderDate	Amount
+1001	201	2024-01-05	1500
+1002	202	2024-01-10	2500
+1003	201	2024-01-15	3000
+1004	203	2024-01-20	1200
+1005	202	2024-01-25	2200
+1006	201	2024-01-30	3500
+Task:
+Write a SQL query to find:
+
+The total amount spent by each customer.
+The average order amount for each customer.
+The highest order amount for each customer.
+
+Solution:
+
+select customerid, 
+sum(amount) as TotalAmountSpent, 
+round(avg(amount), 2) as AverageOrderAmount, 
+max(amount) as HighestOrderAmount
+from orders
+group by customerid;
