@@ -1,0 +1,35 @@
+Imagine you have the following table for employee attendance:
+
+Attendance Table:
+EmployeeID	Name	AttendanceDate	Status
+101	Alice	2024-01-01	Present
+102	Bob	2024-01-01	Absent
+103	Charlie	2024-01-01	Present
+101	Alice	2024-01-02	Absent
+102	Bob	2024-01-02	Present
+103	Charlie	2024-01-02	Present
+Task:
+Write a SQL query to find:
+
+The total number of days present for each employee.
+The total number of days absent for each employee.
+The attendance percentage for each employee.
+The output should look like this:
+
+EmployeeID	Name	TotalPresentDays	TotalAbsentDays	AttendancePercentage
+101	Alice	1	1	50%
+102	Bob	1	1	50%
+103	Charlie	2	0	100%
+
+solution
+
+SELECT EmployeeID, 
+       Name, 
+       COUNT(CASE WHEN Status = 'Present' THEN 1 END) AS TotalPresentDays,
+       COUNT(CASE WHEN Status = 'Absent' THEN 1 END) AS TotalAbsentDays,
+       ROUND(
+           (COUNT(CASE WHEN Status = 'Present' THEN 1 END) * 100.0) / 
+           (COUNT(CASE WHEN Status IN ('Present', 'Absent') THEN 1 END)), 2
+       ) AS AttendancePercentage
+FROM attendance
+GROUP BY EmployeeID, Name;
